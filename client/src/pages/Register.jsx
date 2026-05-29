@@ -3,8 +3,8 @@ import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-export default function Login() {
-  const [form, setForm] = useState({ email: '', password: '' })
+export default function Register() {
+  const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [error, setError] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -12,11 +12,11 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form)
+      const res = await axios.post('https://notes-app-awjb.onrender.com/api/auth/register', form)
       login(res.data.token, res.data.user)
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed')
+      setError(err.response?.data?.message || 'Registration failed')
     }
   }
 
@@ -24,9 +24,16 @@ export default function Login() {
     <div style={styles.container}>
       <div style={styles.box}>
         <h2 style={styles.title}>📝 NoteSpace</h2>
-        <h3 style={styles.sub}>Welcome Back!</h3>
+        <h3 style={styles.sub}>Create Account</h3>
         {error && <p style={styles.error}>{error}</p>}
         <form onSubmit={handleSubmit}>
+          <input
+            style={styles.input}
+            placeholder="Full Name"
+            value={form.name}
+            onChange={e => setForm({ ...form, name: e.target.value })}
+            required
+          />
           <input
             style={styles.input}
             placeholder="Email"
@@ -43,9 +50,9 @@ export default function Login() {
             onChange={e => setForm({ ...form, password: e.target.value })}
             required
           />
-          <button style={styles.btn} type="submit">Login</button>
+          <button style={styles.btn} type="submit">Register</button>
         </form>
-        <p style={styles.link}>Don't have an account? <Link to="/register">Register</Link></p>
+        <p style={styles.link}>Already have an account? <Link to="/login">Login</Link></p>
       </div>
     </div>
   )

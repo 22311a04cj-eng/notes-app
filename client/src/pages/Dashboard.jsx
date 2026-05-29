@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/notes', { headers })
+      const res = await axios.get('https://notes-app-awjb.onrender.com/api/notes', { headers })
       setNotes(res.data)
     } catch (err) {
       console.log(err)
@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const handleAdd = async (form) => {
     try {
-      await axios.post('http://localhost:5000/api/notes', form, { headers })
+      await axios.post('https://notes-app-awjb.onrender.com/api/notes', form, { headers })
       fetchNotes()
       setShowForm(false)
     } catch (err) { console.log(err) }
@@ -36,7 +36,7 @@ export default function Dashboard() {
 
   const handleUpdate = async (form) => {
     try {
-      await axios.put(`http://localhost:5000/api/notes/${editNote._id}`, form, { headers })
+      await axios.put(`https://notes-app-awjb.onrender.com/api/notes/${editNote._id}`, form, { headers })
       fetchNotes()
       setEditNote(null)
     } catch (err) { console.log(err) }
@@ -45,14 +45,14 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this note?')) return
     try {
-      await axios.delete(`http://localhost:5000/api/notes/${id}`, { headers })
+      await axios.delete(`https://notes-app-awjb.onrender.com/api/notes/${id}`, { headers })
       fetchNotes()
     } catch (err) { console.log(err) }
   }
 
   const handlePin = async (id) => {
     try {
-      await axios.patch(`http://localhost:5000/api/notes/${id}/pin`, {}, { headers })
+      await axios.patch(`https://notes-app-awjb.onrender.com/api/notes/${id}/pin`, {}, { headers })
       fetchNotes()
     } catch (err) { console.log(err) }
   }
